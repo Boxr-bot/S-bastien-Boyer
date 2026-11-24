@@ -1,0 +1,251 @@
+<!DOCTYPE html>
+<html lang="fr">
+<head>
+  <meta charset="utf-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1">
+  <title>La ferme · Maraîcher local – Sébastien Boyer, Saint-Bernard (01)</title>
+  <meta name="description" content="La ferme de Sébastien Boyer, maraîcher à Saint-Bernard (Ain) : vente directe et circuit court de légumes de saison, courges et cardons, en bord de Saône.">
+  <link rel="preconnect" href="https://fonts.googleapis.com">
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+  <link href="https://fonts.googleapis.com/css2?family=Fraunces:opsz,wght@9..144,600;9..144,800&family=Inter:wght@400;500;600&display=swap" rel="stylesheet">
+  <link rel="stylesheet" href="style.css">
+  <link rel="icon" href="favicon.svg" type="image/svg+xml">
+  <style>
+    .page-ferme .split-img { border-radius: var(--radius); box-shadow: var(--shadow); width: 100%; object-fit: cover; }
+    .page-ferme .split-img.landscape { aspect-ratio: 4 / 3; }
+    .page-ferme .cardon-pics { display: grid; grid-template-columns: 1fr 1fr; gap: .8rem; }
+    .page-ferme .cardon-pics img { border-radius: var(--radius); aspect-ratio: 3 / 4; object-fit: cover; width: 100%; box-shadow: var(--shadow); }
+    .page-ferme .atout .card-body h3 { margin-top: .2rem; }
+    .page-ferme .atout .num { font-family: "Fraunces", Georgia, serif; font-size: 2rem; font-weight: 800; color: var(--orange); line-height: 1; margin-bottom: .4rem; }
+    .page-ferme .rating { display: flex; flex-wrap: wrap; align-items: center; gap: 1.5rem; }
+    .page-ferme .rating .score { font-family: "Fraunces", Georgia, serif; font-size: 3rem; font-weight: 800; color: var(--soil); line-height: 1; }
+    .page-ferme .rating .stars { color: #f59e0b; font-size: 1.4rem; letter-spacing: .1em; }
+  </style>
+</head>
+<body class="page-ferme">
+
+<header class="site-header">
+  <div class="wrap">
+    <a href="index.html" class="brand">
+      <img src="favicon.svg" alt="">
+      <div><strong>Sébastien Boyer</strong><span>Maraîcher · Saint-Bernard</span></div>
+    </a>
+    <button class="nav-toggle" aria-expanded="false" aria-controls="menu">Menu</button>
+    <nav class="main-nav" id="menu" aria-label="Menu principal">
+      <a href="index.html">Accueil</a>
+      <a href="produits.html">Produits</a>
+      <a href="saisons.html">Saisons</a>
+      <a href="recettes.html">Recettes</a>
+      <a href="ferme.html">La ferme</a>
+      <a href="contact.html">Nous trouver</a>
+      <a href="tel:+33650515836" class="nav-call">📞 Appeler</a>
+    </nav>
+  </div>
+</header>
+
+<main>
+
+  <section class="page-hero" style="background-image:url('images/courges-etal.jpg')">
+    <div class="wrap">
+      <p class="eyebrow">La ferme · Saint-Bernard (Ain)</p>
+      <h1>Du champ au panier</h1>
+      <p class="lead">Un maraîcher local, un étal au bord de la route et des légumes de saison vendus en direct, sans intermédiaire.</p>
+    </div>
+  </section>
+
+  <!-- Présentation -->
+  <section class="section">
+    <div class="wrap split">
+      <div>
+        <p class="eyebrow">Qui sommes-nous ?</p>
+        <h2>Un producteur local, en vente directe</h2>
+        <p>Sébastien Boyer est maraîcher à Saint-Bernard, dans l'Ain, au bord de la Saône, entre Trévoux et Anse. Ici, on cultive des fruits et légumes et on les vend directement à la ferme : vous achetez au producteur, sans passer par un magasin.</p>
+        <p>Pas de grande surface ni de vitrine : un étal en bord de route, un hangar, des caisses en bois bien remplies et des pancartes écrites à la main avec les prix du moment. Selon la saison, on y trouve des pommes de terre, des oignons, des courges de toutes les formes, des carottes rouges, des cardons…</p>
+        <p>L'idée est simple : des produits frais, de saison, cultivés près de chez vous.</p>
+        <div class="actions">
+          <a href="produits.html" class="btn btn-primary">Voir les produits et les prix</a>
+          <a href="contact.html" class="btn btn-outline">Venir à la ferme</a>
+        </div>
+      </div>
+      <img class="split-img landscape" src="images/courges-variees.jpg" alt="Caisses en bois remplies de courges décoratives, de mini-citrouilles et de potimarrons sur l'étal de la ferme" loading="lazy">
+    </div>
+  </section>
+
+  <!-- Atouts -->
+  <section class="section section-alt">
+    <div class="wrap">
+      <div class="section-head center">
+        <p class="eyebrow">Pourquoi acheter à la ferme ?</p>
+        <h2>Le circuit court, tout simplement</h2>
+        <p>Acheter directement au producteur, c'est aussi savoir d'où viennent vos légumes.</p>
+      </div>
+      <div class="grid-3">
+        <article class="card atout">
+          <div class="card-body">
+            <div class="num">01</div>
+            <h3>Fraîcheur</h3>
+            <p>Les légumes vont du champ à l'étal sans long transport ni stockage en entrepôt. Vous les achetez au plus près de la récolte.</p>
+          </div>
+        </article>
+        <article class="card atout">
+          <div class="card-body">
+            <div class="num">02</div>
+            <h3>Circuit court</h3>
+            <p>Pas d'intermédiaire entre le producteur et vous : vous achetez sur place, vous pouvez poser vos questions et le prix revient à celui qui cultive.</p>
+          </div>
+        </article>
+        <article class="card atout">
+          <div class="card-body">
+            <div class="num">03</div>
+            <h3>Saisonnalité</h3>
+            <p>On vend ce que la saison donne : les étals changent au fil de l'année. Le <a href="saisons.html">calendrier des saisons</a> vous aide à savoir quoi trouver et quand.</p>
+          </div>
+        </article>
+      </div>
+    </div>
+  </section>
+
+  <!-- Cardon -->
+  <section class="section" id="cardon">
+    <div class="wrap split">
+      <div class="cardon-pics">
+        <img src="images/cardons.jpg" alt="Cardons frais effilés, bien blancs, rangés dans une caisse en bois" loading="lazy">
+        <img src="images/cardons-bocaux.jpg" alt="Bocaux de cardons lyonnais au naturel alignés sur une étagère" loading="lazy">
+      </div>
+      <div>
+        <p class="eyebrow">La spécialité</p>
+        <h2>Le cardon, légume de chez nous</h2>
+        <p class="lead">Le cardon est un légume emblématique de la région lyonnaise, incontournable des tables de fin d'année.</p>
+        <p>Ses côtes sont effilées à la main, un travail patient qui les débarrasse de leurs fils. En saison, à l'automne et en hiver, on les trouve <strong>frais</strong> sur l'étal.</p>
+        <p>Pour en profiter toute l'année, ils sont aussi proposés <strong>en bocaux, au naturel</strong> : des cardons, de l'eau et du sel, rien d'autre. Prêts à cuisiner en gratin ou à la moelle.</p>
+        <div class="actions">
+          <a href="produits.html" class="btn btn-primary">Prix des cardons</a>
+          <a href="recettes.html" class="btn btn-outline">Idées de recettes</a>
+        </div>
+      </div>
+    </div>
+  </section>
+
+  <!-- Galerie -->
+  <section class="section section-alt">
+    <div class="wrap">
+      <div class="section-head">
+        <p class="eyebrow">En images</p>
+        <h2>Un tour sur l'étal</h2>
+        <p>Quelques photos prises à la ferme, au fil des saisons.</p>
+      </div>
+      <div class="gallery">
+        <figure>
+          <img src="images/courges-etal.jpg" alt="Grand étal de courges variées, bleues et musquées, en bord de route sous un ciel bleu" loading="lazy">
+          <figcaption>L'étal de courges en bord de route</figcaption>
+        </figure>
+        <figure>
+          <img src="images/courges-variees.jpg" alt="Caisses de courges décoratives, mini-citrouilles et potimarrons" loading="lazy">
+          <figcaption>Courges décoratives et potimarrons</figcaption>
+        </figure>
+        <figure>
+          <img src="images/citrouilles.jpg" alt="Grosses citrouilles orange posées sous le hangar" loading="lazy">
+          <figcaption>Les citrouilles sous le hangar</figcaption>
+        </figure>
+        <figure>
+          <img src="images/butternut-potimarron.jpg" alt="Caisse de butternuts surmontée de potimarrons rouges" loading="lazy">
+          <figcaption>Butternuts et potimarrons</figcaption>
+        </figure>
+        <figure>
+          <img src="images/cardons.jpg" alt="Cardons frais effilés dans une caisse en bois" loading="lazy">
+          <figcaption>Cardons frais, effilés à la main</figcaption>
+        </figure>
+        <figure>
+          <img src="images/cardons-bocaux.jpg" alt="Bocaux de cardons lyonnais au naturel sur une étagère" loading="lazy">
+          <figcaption>Cardons lyonnais au naturel, en bocaux</figcaption>
+        </figure>
+        <figure>
+          <img src="images/pommes-de-terre.jpg" alt="Sacs de pommes de terre en filets orange sur une palette" loading="lazy">
+          <figcaption>Pommes de terre en sacs</figcaption>
+        </figure>
+        <figure>
+          <img src="images/oignons.jpg" alt="Filets d'oignons jaunes et rouges avec une pancarte de prix" loading="lazy">
+          <figcaption>Oignons paille et oignons rouges</figcaption>
+        </figure>
+        <figure>
+          <img src="images/betteraves.jpg" alt="Caisse en bois de betteraves rouges avec une pancarte écrite à la main" loading="lazy">
+          <figcaption>Carottes rouges (betteraves)</figcaption>
+        </figure>
+        <figure>
+          <img src="images/miel.jpg" alt="Pots de miel d'acacia, de châtaignier, de fleurs et de sapin" loading="lazy">
+          <figcaption>Miels en pots (acacia, châtaignier, fleurs, sapin)</figcaption>
+        </figure>
+      </div>
+    </div>
+  </section>
+
+  <!-- Avis -->
+  <section class="section">
+    <div class="wrap">
+      <div class="info-box rating">
+        <div class="score">5/5</div>
+        <div>
+          <div class="stars" aria-hidden="true">★★★★★</div>
+          <p><strong>Note de 5 sur 5 sur Google</strong> (3 avis).</p>
+          <p class="muted">Vous êtes passé à la ferme ? Votre avis aide d'autres habitants du coin à nous trouver.</p>
+        </div>
+        <a class="btn btn-outline" href="https://www.google.com/maps/search/?api=1&query=Mara%C3%AEcher+local+S%C3%A9bastien+Boyer+Saint-Bernard" target="_blank" rel="noopener">Voir les avis sur Google</a>
+      </div>
+    </div>
+  </section>
+
+  <!-- CTA -->
+  <section class="section section-alt">
+    <div class="wrap">
+      <div class="cta">
+        <div>
+          <h2>Envie de passer à la ferme ?</h2>
+          <p>Ouvert à partir de 8h. Un petit coup de fil avant de venir, c'est plus sûr.</p>
+        </div>
+        <div class="actions">
+          <a href="tel:+33650515836" class="btn btn-primary">📞 06 50 51 58 36</a>
+          <a href="contact.html" class="btn btn-ghost">Nous trouver</a>
+        </div>
+      </div>
+    </div>
+  </section>
+
+</main>
+
+<footer class="site-footer">
+  <div class="wrap">
+    <div class="footer-grid">
+      <div>
+        <h4>Maraîcher local – Sébastien Boyer</h4>
+        <p>Fruits et légumes de saison en vente directe à la ferme, à Saint-Bernard dans l'Ain.</p>
+        <p>49 Chemin des Cures, 01600 Saint-Bernard<br><a href="tel:+33650515836">06 50 51 58 36</a></p>
+      </div>
+      <div>
+        <h4>Le site</h4>
+        <ul>
+          <li><a href="produits.html">Produits &amp; prix</a></li>
+          <li><a href="saisons.html">Calendrier des saisons</a></li>
+          <li><a href="recettes.html">Recettes</a></li>
+          <li><a href="ferme.html">La ferme</a></li>
+          <li><a href="contact.html">Nous trouver &amp; horaires</a></li>
+        </ul>
+      </div>
+      <div>
+        <h4>Venir à la ferme</h4>
+        <ul>
+          <li>Ouvert à partir de 8h</li>
+          <li>Appelez avant de passer en cas de doute</li>
+          <li><a href="https://www.google.com/maps/search/?api=1&query=49+Chemin+des+Cures+01600+Saint-Bernard" target="_blank" rel="noopener">Itinéraire Google Maps →</a></li>
+        </ul>
+      </div>
+    </div>
+    <div class="footer-bottom">
+      <span>© <span id="year">2026</span> Sébastien Boyer, maraîcher à Saint-Bernard (01)</span>
+      <a href="mentions-legales.html">Mentions légales</a>
+    </div>
+  </div>
+</footer>
+
+<script src="js/main.js"></script>
+</body>
+</html>

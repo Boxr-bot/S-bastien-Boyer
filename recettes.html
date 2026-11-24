@@ -1,0 +1,685 @@
+<!DOCTYPE html>
+<html lang="fr">
+<head>
+  <meta charset="utf-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1">
+  <title>Recettes de saison : cardons, courges, pommes de terre · Maraîcher local – Sébastien Boyer, Saint-Bernard (01)</title>
+  <meta name="description" content="Recettes de saison simples avec les légumes du maraîcher de Saint-Bernard (Ain) : gratin de cardons, velouté de potimarron, gratin dauphinois, soupe à l'oignon.">
+  <link rel="preconnect" href="https://fonts.googleapis.com">
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+  <link href="https://fonts.googleapis.com/css2?family=Fraunces:opsz,wght@9..144,600;9..144,800&family=Inter:wght@400;500;600&display=swap" rel="stylesheet">
+  <link rel="stylesheet" href="style.css">
+  <link rel="icon" href="favicon.svg" type="image/svg+xml">
+  <style>
+    /* Les éléments filtrés (cartes, recettes) doivent bien disparaître malgré leur display */
+    .page-recettes [hidden] { display: none !important; }
+
+    /* Sommaire */
+    .page-recettes .sommaire { margin-bottom: 3rem; }
+    .page-recettes .sommaire .card h3 { font-size: 1.1rem; margin-bottom: .35rem; }
+    .page-recettes .card-meta { font-size: .88rem; color: var(--muted); margin: 0 0 .7rem; }
+    .page-recettes .card-meta span + span::before { content: " · "; }
+    .page-recettes .card-link { margin-top: auto; font-weight: 600; color: var(--orange-dark); font-size: .92rem; }
+
+    /* Fiche recette */
+    .page-recettes .recettes-liste { display: flex; flex-direction: column; gap: 2rem; }
+    .page-recettes .recette {
+      background: var(--paper); border: 1px solid var(--line); border-radius: var(--radius);
+      padding: clamp(1.3rem, 4vw, 2.2rem);
+    }
+    .page-recettes .recette-head { border-bottom: 1px dashed var(--line); padding-bottom: 1.1rem; margin-bottom: 1.4rem; }
+    .page-recettes .recette-head h2 { font-size: clamp(1.5rem, 3vw, 2rem); }
+    .page-recettes .recette-head p { color: var(--text); margin-bottom: .8rem; }
+    .page-recettes .recette-infos {
+      list-style: none; padding: 0; margin: 0; display: flex; flex-wrap: wrap; gap: .5rem 1.4rem;
+      font-size: .93rem; color: var(--muted);
+    }
+    .page-recettes .recette-infos strong { color: var(--soil); }
+    .page-recettes .recette-corps { display: grid; grid-template-columns: minmax(220px, 1fr) 2fr; gap: clamp(1.5rem, 4vw, 3rem); }
+    .page-recettes .recette-corps h3 { font-size: 1.1rem; color: var(--green); margin-bottom: .7rem; }
+    .page-recettes .ingredients { margin: 0; padding-left: 1.2rem; }
+    .page-recettes .ingredients li { margin-bottom: .3rem; }
+    .page-recettes .ingredients li::marker { color: var(--orange); }
+    .page-recettes .etapes { margin: 0; padding: 0; list-style: none; counter-reset: etape; }
+    .page-recettes .etapes li { position: relative; padding-left: 2.4rem; margin-bottom: .9rem; counter-increment: etape; }
+    .page-recettes .etapes li::before {
+      content: counter(etape); position: absolute; left: 0; top: .05rem;
+      width: 1.7rem; height: 1.7rem; border-radius: 50%; background: var(--orange-soft); color: var(--orange-dark);
+      font-weight: 600; font-size: .9rem; display: flex; align-items: center; justify-content: center;
+    }
+    .page-recettes .astuce {
+      margin-top: 1.4rem; background: var(--green-soft); border: 1px solid #cfe0b4; border-radius: 10px;
+      padding: .9rem 1.1rem; font-size: .95rem;
+    }
+    .page-recettes .astuce p { margin: 0; }
+    .page-recettes .astuce strong { color: var(--green); }
+    .page-recettes .recette .actions { margin-top: 1.2rem; }
+    .page-recettes .recette .btn { padding: .6rem 1.1rem; font-size: .95rem; }
+
+    @media (max-width: 820px) {
+      .page-recettes .recette-corps { grid-template-columns: 1fr; }
+    }
+
+    /* Impression : seulement la recette choisie (classe temporaire sur le body) */
+    @media print {
+      .page-recettes { background: #fff; }
+      .page-recettes .site-header,
+      .page-recettes .site-footer,
+      .page-recettes .page-hero,
+      .page-recettes .filters,
+      .page-recettes .sommaire,
+      .page-recettes .no-print,
+      .page-recettes .recette .actions { display: none !important; }
+      .page-recettes .section { padding: 0; }
+      .page-recettes .recette { border: 0; padding: 0; page-break-inside: avoid; break-inside: avoid; }
+      .page-recettes .recette-corps { grid-template-columns: 1fr 2fr; }
+      .page-recettes.print-one main > section:not(.section-recettes),
+      .page-recettes.print-one .section-recettes .section-head,
+      .page-recettes.print-one .recette:not(.is-printing) { display: none !important; }
+      .page-recettes.print-one .recette.is-printing { display: block !important; }
+    }
+  </style>
+</head>
+<body class="page-recettes">
+
+<header class="site-header">
+  <div class="wrap">
+    <a href="index.html" class="brand">
+      <img src="favicon.svg" alt="">
+      <div><strong>Sébastien Boyer</strong><span>Maraîcher · Saint-Bernard</span></div>
+    </a>
+    <button class="nav-toggle" aria-expanded="false" aria-controls="menu">Menu</button>
+    <nav class="main-nav" id="menu" aria-label="Menu principal">
+      <a href="index.html">Accueil</a>
+      <a href="produits.html">Produits</a>
+      <a href="saisons.html">Saisons</a>
+      <a href="recettes.html">Recettes</a>
+      <a href="ferme.html">La ferme</a>
+      <a href="contact.html">Nous trouver</a>
+      <a href="tel:+33650515836" class="nav-call">📞 Appeler</a>
+    </nav>
+  </div>
+</header>
+
+<main>
+
+  <section class="page-hero" style="background-image:url('images/butternut-potimarron.jpg')">
+    <div class="wrap">
+      <p class="eyebrow">En cuisine</p>
+      <h1>Recettes de saison</h1>
+      <p class="lead">Des idées simples pour cuisiner les légumes de la ferme : cardons, courges, pommes de terre, oignons et carottes rouges. Des classiques de chez nous, faciles à refaire à la maison.</p>
+    </div>
+  </section>
+
+  <section class="section section-recettes">
+    <div class="wrap">
+      <div class="section-head">
+        <p class="eyebrow">8 recettes</p>
+        <h2>Choisissez votre légume</h2>
+        <p>Toutes les recettes sont prévues pour 4 personnes. Filtrez par produit, puis cliquez sur une carte pour aller directement à la recette.</p>
+      </div>
+
+      <div class="filters" data-target="#recettes" role="group" aria-label="Filtrer les recettes par produit">
+        <button type="button" data-filter="tout" aria-pressed="true">Tout</button>
+        <button type="button" data-filter="cardons" aria-pressed="false">Cardons</button>
+        <button type="button" data-filter="courges" aria-pressed="false">Courges</button>
+        <button type="button" data-filter="pommes-de-terre" aria-pressed="false">Pommes de terre</button>
+        <button type="button" data-filter="oignons" aria-pressed="false">Oignons</button>
+        <button type="button" data-filter="betteraves" aria-pressed="false">Betteraves</button>
+      </div>
+
+      <div id="recettes">
+
+        <!-- Sommaire en cartes -->
+        <nav class="sommaire" aria-label="Sommaire des recettes">
+          <div class="grid">
+            <a class="card" href="#gratin-cardons" data-cat="cardons">
+              <img src="images/cardons.jpg" alt="Cardons frais effilés, bien blancs, dans une caisse en bois" loading="lazy">
+              <div class="card-body">
+                <div class="badges"><span class="badge">Cardons</span><span class="badge badge-orange">Spécialité lyonnaise</span></div>
+                <h3>Gratin de cardons à la béchamel</h3>
+                <p class="card-meta"><span>1 h 30</span><span>Moyen</span></p>
+                <span class="card-link">Voir la recette →</span>
+              </div>
+            </a>
+            <a class="card" href="#cardons-moelle" data-cat="cardons">
+              <img src="images/cardons-bocaux.jpg" alt="Bocaux de cardons lyonnais au naturel alignés sur une étagère" loading="lazy">
+              <div class="card-body">
+                <div class="badges"><span class="badge">Cardons</span><span class="badge badge-orange">Avec le bocal</span></div>
+                <h3>Cardons à la moelle (version simple)</h3>
+                <p class="card-meta"><span>50 min</span><span>Moyen</span></p>
+                <span class="card-link">Voir la recette →</span>
+              </div>
+            </a>
+            <a class="card" href="#veloute-potimarron" data-cat="courges oignons">
+              <img src="images/courges-variees.jpg" alt="Caisses de courges variées, potimarrons et mini-citrouilles" loading="lazy">
+              <div class="card-body">
+                <div class="badges"><span class="badge">Courges</span><span class="badge badge-orange">Sans épluchage</span></div>
+                <h3>Velouté de potimarron</h3>
+                <p class="card-meta"><span>45 min</span><span>Facile</span></p>
+                <span class="card-link">Voir la recette →</span>
+              </div>
+            </a>
+            <a class="card" href="#butternut-roti" data-cat="courges">
+              <img src="images/miel.jpg" alt="Pots de miel d'acacia, de châtaignier, de fleurs et de sapin" loading="lazy">
+              <div class="card-body">
+                <div class="badges"><span class="badge">Courges</span><span class="badge badge-orange">Au four</span></div>
+                <h3>Butternut rôti au four, miel et herbes</h3>
+                <p class="card-meta"><span>55 min</span><span>Facile</span></p>
+                <span class="card-link">Voir la recette →</span>
+              </div>
+            </a>
+            <a class="card" href="#gratin-dauphinois" data-cat="pommes-de-terre">
+              <img src="images/pommes-de-terre.jpg" alt="Sacs de pommes de terre en filet orange posés sur une palette" loading="lazy">
+              <div class="card-body">
+                <div class="badges"><span class="badge">Pommes de terre</span><span class="badge badge-orange">Classique</span></div>
+                <h3>Gratin dauphinois</h3>
+                <p class="card-meta"><span>1 h 45</span><span>Facile</span></p>
+                <span class="card-link">Voir la recette →</span>
+              </div>
+            </a>
+            <a class="card" href="#soupe-oignon" data-cat="oignons">
+              <img src="images/oignons.jpg" alt="Filets d'oignons jaunes et rouges avec une pancarte de prix" loading="lazy">
+              <div class="card-body">
+                <div class="badges"><span class="badge">Oignons</span><span class="badge badge-orange">Plat d'hiver</span></div>
+                <h3>Soupe à l'oignon gratinée</h3>
+                <p class="card-meta"><span>1 h 20</span><span>Facile</span></p>
+                <span class="card-link">Voir la recette →</span>
+              </div>
+            </a>
+            <a class="card" href="#salade-betteraves" data-cat="betteraves oignons">
+              <img src="images/betteraves.jpg" alt="Caisse en bois remplie de betteraves rouges, appelées carottes rouges" loading="lazy">
+              <div class="card-body">
+                <div class="badges"><span class="badge">Betteraves</span><span class="badge badge-orange">Entrée froide</span></div>
+                <h3>Salade de carottes rouges</h3>
+                <p class="card-meta"><span>15 min (+ cuisson)</span><span>Très facile</span></p>
+                <span class="card-link">Voir la recette →</span>
+              </div>
+            </a>
+            <a class="card" href="#puree-courge" data-cat="courges pommes-de-terre">
+              <img src="images/courges-etal.jpg" alt="Grand étal de courges bleues et musquées en bord de route" loading="lazy">
+              <div class="card-body">
+                <div class="badges"><span class="badge">Courges</span><span class="badge badge-orange">Purée ou soupe</span></div>
+                <h3>Purée de courge bleue ou musquée</h3>
+                <p class="card-meta"><span>45 min</span><span>Facile</span></p>
+                <span class="card-link">Voir la recette →</span>
+              </div>
+            </a>
+          </div>
+        </nav>
+
+        <!-- Recettes complètes -->
+        <div class="recettes-liste">
+
+          <!-- 1 -->
+          <article class="recette" id="gratin-cardons" data-cat="cardons">
+            <header class="recette-head">
+              <div class="badges"><span class="badge">Cardons</span><span class="badge badge-orange">Incontournable lyonnais</span></div>
+              <h2>Gratin de cardons à la béchamel</h2>
+              <p>Le grand classique des tables lyonnaises en hiver : des cardons fondants sous une béchamel dorée.</p>
+              <ul class="recette-infos">
+                <li><strong>Pour</strong> 4 personnes</li>
+                <li><strong>Préparation :</strong> 40 min</li>
+                <li><strong>Cuisson :</strong> 50 min (blanchiment + four)</li>
+                <li><strong>Difficulté :</strong> moyenne</li>
+              </ul>
+            </header>
+            <div class="recette-corps">
+              <div>
+                <h3>Ingrédients</h3>
+                <ul class="ingredients">
+                  <li>1,5 kg de cardons frais</li>
+                  <li>1 citron</li>
+                  <li>1 cuillère à soupe de farine (pour l'eau de cuisson)</li>
+                  <li>Gros sel</li>
+                  <li><em>Béchamel :</em> 50 g de beurre, 50 g de farine, 60 cl de lait</li>
+                  <li>Noix de muscade, sel, poivre</li>
+                  <li>80 g de fromage râpé (comté ou gruyère)</li>
+                  <li>Un peu de beurre pour le plat</li>
+                </ul>
+              </div>
+              <div>
+                <h3>Préparation</h3>
+                <ol class="etapes">
+                  <li>Effilez les cardons : retirez les feuilles et les côtes trop vertes ou creuses, puis ôtez les fils à l'économe. Coupez-les en tronçons de 6 à 8 cm et plongez-les au fur et à mesure dans un saladier d'eau citronnée.</li>
+                  <li>Portez à ébullition une grande casserole d'eau salée. Délayez la farine dans un peu d'eau froide, ajoutez-la avec le jus du reste du citron : c'est ce qu'on appelle « cuire dans un blanc », les cardons restent bien clairs.</li>
+                  <li>Faites cuire les cardons 30 à 40 min à petits bouillons, jusqu'à ce que la pointe d'un couteau s'y enfonce facilement. Égouttez soigneusement.</li>
+                  <li>Préchauffez le four à 200 °C. Préparez la béchamel : faites fondre le beurre, ajoutez la farine et remuez 1 à 2 min sans colorer. Versez le lait froid petit à petit en fouettant, puis laissez épaissir 5 min à feu doux. Salez, poivrez, râpez un peu de muscade.</li>
+                  <li>Beurrez un plat à gratin, rangez-y les cardons, nappez de béchamel et parsemez de fromage râpé.</li>
+                  <li>Enfournez 20 à 25 min, jusqu'à ce que le dessus soit bien doré. Servez chaud.</li>
+                </ol>
+              </div>
+            </div>
+            <div class="astuce">
+              <p><strong>L'astuce du maraîcher :</strong> pas le temps d'effiler ? Remplacez les cardons frais par des cardons au naturel en bocal : égouttez-les, rincez-les et passez directement à l'étape 4 (comptez environ 2 bocaux pour 4). Voir aussi notre encadré <a href="#preparer-cardons">« Préparer les cardons frais »</a>.</p>
+            </div>
+            <div class="actions">
+              <a class="btn btn-outline" href="produits.html">Voir le produit</a>
+              <button type="button" class="btn btn-primary" data-print>Imprimer la recette</button>
+            </div>
+          </article>
+
+          <!-- 2 -->
+          <article class="recette" id="cardons-moelle" data-cat="cardons">
+            <header class="recette-head">
+              <div class="badges"><span class="badge">Cardons</span><span class="badge badge-orange">Version simplifiée</span></div>
+              <h2>Cardons à la moelle</h2>
+              <p>Une version simple de la recette lyonnaise des jours de fête, qui se prépare très bien avec un bocal de cardons au naturel.</p>
+              <ul class="recette-infos">
+                <li><strong>Pour</strong> 4 personnes</li>
+                <li><strong>Préparation :</strong> 20 min</li>
+                <li><strong>Cuisson :</strong> 30 min</li>
+                <li><strong>Difficulté :</strong> moyenne</li>
+              </ul>
+            </header>
+            <div class="recette-corps">
+              <div>
+                <h3>Ingrédients</h3>
+                <ul class="ingredients">
+                  <li>2 bocaux de cardons au naturel (ou environ 1,2 kg de cardons frais, effilés et blanchis)</li>
+                  <li>4 os à moelle (à demander à votre boucher, coupés en tronçons)</li>
+                  <li>1 échalote</li>
+                  <li>30 g de beurre</li>
+                  <li>25 g de farine</li>
+                  <li>40 cl de bouillon de bœuf</li>
+                  <li>Sel, poivre</li>
+                  <li>Un peu de persil plat</li>
+                </ul>
+              </div>
+              <div>
+                <h3>Préparation</h3>
+                <ol class="etapes">
+                  <li>Égouttez les cardons du bocal, rincez-les sous l'eau froide et laissez-les bien égoutter. Coupez les plus longs morceaux en deux.</li>
+                  <li>Sortez la moelle des os en la poussant avec le pouce (c'est plus facile si les os ont trempé quelques minutes dans l'eau tiède). Coupez-la en rondelles d'environ 1 cm.</li>
+                  <li>Faites fondre le beurre dans une sauteuse et faites-y suer l'échalote émincée 2 min. Ajoutez la farine, mélangez 1 min, puis versez le bouillon en remuant jusqu'à obtenir une sauce lisse.</li>
+                  <li>Ajoutez les cardons dans la sauce et laissez mijoter 15 min à feu doux. Goûtez, salez et poivrez.</li>
+                  <li>Pendant ce temps, pochez les rondelles de moelle 2 à 3 min dans de l'eau salée frémissante (sans bouillir), puis égouttez-les délicatement.</li>
+                  <li>Versez les cardons dans un plat chaud, déposez la moelle sur le dessus et passez 5 min sous le gril du four. Parsemez de persil et servez aussitôt.</li>
+                </ol>
+              </div>
+            </div>
+            <div class="astuce">
+              <p><strong>L'astuce du maraîcher :</strong> les cardons au naturel sont déjà effilés et cuits : il suffit de les égoutter et de les rincer pour enlever le goût de la saumure. C'est la solution idéale pour un repas de fête sans y passer la matinée.</p>
+            </div>
+            <div class="actions">
+              <a class="btn btn-outline" href="produits.html">Voir le produit</a>
+              <button type="button" class="btn btn-primary" data-print>Imprimer la recette</button>
+            </div>
+          </article>
+
+          <!-- 3 -->
+          <article class="recette" id="veloute-potimarron" data-cat="courges oignons">
+            <header class="recette-head">
+              <div class="badges"><span class="badge">Courges</span><span class="badge badge-orange">Sans épluchage</span></div>
+              <h2>Velouté de potimarron</h2>
+              <p>Doux, onctueux, avec un petit goût de châtaigne. Et bonne nouvelle : la peau du potimarron se mange, inutile de l'éplucher.</p>
+              <ul class="recette-infos">
+                <li><strong>Pour</strong> 4 personnes</li>
+                <li><strong>Préparation :</strong> 15 min</li>
+                <li><strong>Cuisson :</strong> 30 min</li>
+                <li><strong>Difficulté :</strong> facile</li>
+              </ul>
+            </header>
+            <div class="recette-corps">
+              <div>
+                <h3>Ingrédients</h3>
+                <ul class="ingredients">
+                  <li>1 potimarron d'environ 1,2 kg</li>
+                  <li>1 oignon</li>
+                  <li>1 pomme de terre moyenne (facultatif, pour plus d'onctuosité)</li>
+                  <li>20 g de beurre ou 1 cuillère à soupe d'huile</li>
+                  <li>1 litre de bouillon de légumes (ou d'eau)</li>
+                  <li>15 cl de crème liquide ou de lait</li>
+                  <li>Sel, poivre, une pincée de muscade</li>
+                </ul>
+              </div>
+              <div>
+                <h3>Préparation</h3>
+                <ol class="etapes">
+                  <li>Lavez et brossez le potimarron. Coupez-le en deux, retirez les graines avec une cuillère, puis taillez-le en cubes avec la peau.</li>
+                  <li>Épluchez et émincez l'oignon. Épluchez la pomme de terre et coupez-la en morceaux.</li>
+                  <li>Dans une grande casserole, faites fondre l'oignon dans le beurre 3 à 4 min sans le colorer.</li>
+                  <li>Ajoutez le potimarron et la pomme de terre, couvrez de bouillon et laissez cuire 25 min à couvert, jusqu'à ce que tout soit bien tendre.</li>
+                  <li>Mixez finement, ajoutez la crème, salez, poivrez et ajoutez la muscade. Rallongez avec un peu d'eau chaude si le velouté est trop épais.</li>
+                </ol>
+              </div>
+            </div>
+            <div class="astuce">
+              <p><strong>L'astuce du maraîcher :</strong> choisissez un potimarron lourd pour sa taille, à la peau bien orange et sans tache. Entier, il se garde plusieurs semaines dans un endroit frais et sec.</p>
+            </div>
+            <div class="actions">
+              <a class="btn btn-outline" href="produits.html">Voir le produit</a>
+              <button type="button" class="btn btn-primary" data-print>Imprimer la recette</button>
+            </div>
+          </article>
+
+          <!-- 4 -->
+          <article class="recette" id="butternut-roti" data-cat="courges">
+            <header class="recette-head">
+              <div class="badges"><span class="badge">Courges</span><span class="badge badge-orange">Au four</span></div>
+              <h2>Butternut rôti au four, miel et herbes</h2>
+              <p>Des quartiers de butternut caramélisés, parfumés au thym et au romarin : parfait en accompagnement d'une volaille ou d'un rôti.</p>
+              <ul class="recette-infos">
+                <li><strong>Pour</strong> 4 personnes</li>
+                <li><strong>Préparation :</strong> 15 min</li>
+                <li><strong>Cuisson :</strong> 35 à 40 min</li>
+                <li><strong>Difficulté :</strong> facile</li>
+              </ul>
+            </header>
+            <div class="recette-corps">
+              <div>
+                <h3>Ingrédients</h3>
+                <ul class="ingredients">
+                  <li>1 butternut d'environ 1,2 kg</li>
+                  <li>3 cuillères à soupe d'huile d'olive</li>
+                  <li>2 cuillères à soupe de miel liquide</li>
+                  <li>2 gousses d'ail</li>
+                  <li>Quelques branches de thym et 1 branche de romarin</li>
+                  <li>Sel, poivre</li>
+                </ul>
+              </div>
+              <div>
+                <h3>Préparation</h3>
+                <ol class="etapes">
+                  <li>Préchauffez le four à 200 °C.</li>
+                  <li>Lavez le butternut, coupez-le en deux dans la longueur et retirez les graines. Vous pouvez garder la peau : elle devient tendre à la cuisson. Taillez des tranches d'environ 2 cm d'épaisseur.</li>
+                  <li>Dans un bol, mélangez l'huile, le miel, l'ail écrasé, les feuilles de thym et de romarin, du sel et du poivre.</li>
+                  <li>Étalez les tranches sur une plaque recouverte de papier cuisson et badigeonnez-les du mélange.</li>
+                  <li>Enfournez 35 à 40 min en retournant les morceaux à mi-cuisson : ils doivent être tendres à cœur et bien dorés sur les bords.</li>
+                </ol>
+              </div>
+            </div>
+            <div class="astuce">
+              <p><strong>L'astuce du maraîcher :</strong> un miel doux comme l'acacia ou le toutes fleurs se marie très bien avec la courge. Vous trouverez des pots de miel à la ferme, à côté des légumes. Une poignée de noix concassées en fin de cuisson, et c'est encore meilleur.</p>
+            </div>
+            <div class="actions">
+              <a class="btn btn-outline" href="produits.html">Voir le produit</a>
+              <button type="button" class="btn btn-primary" data-print>Imprimer la recette</button>
+            </div>
+          </article>
+
+          <!-- 5 -->
+          <article class="recette" id="gratin-dauphinois" data-cat="pommes-de-terre">
+            <header class="recette-head">
+              <div class="badges"><span class="badge">Pommes de terre</span><span class="badge badge-orange">Classique</span></div>
+              <h2>Gratin dauphinois</h2>
+              <p>La recette traditionnelle, sans fromage : des pommes de terre fondantes, du lait, de la crème et une pointe d'ail.</p>
+              <ul class="recette-infos">
+                <li><strong>Pour</strong> 4 personnes</li>
+                <li><strong>Préparation :</strong> 25 min</li>
+                <li><strong>Cuisson :</strong> 1 h 15 à 1 h 30</li>
+                <li><strong>Difficulté :</strong> facile</li>
+              </ul>
+            </header>
+            <div class="recette-corps">
+              <div>
+                <h3>Ingrédients</h3>
+                <ul class="ingredients">
+                  <li>1,2 kg de pommes de terre</li>
+                  <li>50 cl de lait entier</li>
+                  <li>25 cl de crème entière</li>
+                  <li>1 gousse d'ail</li>
+                  <li>20 g de beurre</li>
+                  <li>Noix de muscade, sel, poivre</li>
+                </ul>
+              </div>
+              <div>
+                <h3>Préparation</h3>
+                <ol class="etapes">
+                  <li>Préchauffez le four à 160 °C.</li>
+                  <li>Épluchez les pommes de terre, essuyez-les, puis coupez-les en rondelles fines (environ 3 mm). Ne les lavez pas après les avoir coupées : l'amidon aide le gratin à être onctueux.</li>
+                  <li>Frottez un plat à gratin avec la gousse d'ail coupée en deux, puis beurrez-le généreusement.</li>
+                  <li>Dans une grande casserole, portez le lait et la crème à frémissement avec du sel, du poivre et un peu de muscade. Ajoutez les pommes de terre et laissez cuire 10 min à feu doux en remuant délicatement pour qu'elles n'attachent pas.</li>
+                  <li>Versez le tout dans le plat, égalisez et parsemez de quelques noisettes de beurre.</li>
+                  <li>Enfournez 1 h à 1 h 15, jusqu'à ce que le dessus soit doré et que la pointe d'un couteau traverse les pommes de terre sans résistance. Laissez reposer 10 min avant de servir.</li>
+                </ol>
+              </div>
+            </div>
+            <div class="astuce">
+              <p><strong>L'astuce du maraîcher :</strong> la variété Sasha, polyvalente, convient bien au gratin. Gardez vos pommes de terre au frais, au sec et à l'abri de la lumière pour qu'elles ne verdissent pas.</p>
+            </div>
+            <div class="actions">
+              <a class="btn btn-outline" href="produits.html">Voir le produit</a>
+              <button type="button" class="btn btn-primary" data-print>Imprimer la recette</button>
+            </div>
+          </article>
+
+          <!-- 6 -->
+          <article class="recette" id="soupe-oignon" data-cat="oignons">
+            <header class="recette-head">
+              <div class="badges"><span class="badge">Oignons</span><span class="badge badge-orange">Plat d'hiver</span></div>
+              <h2>Soupe à l'oignon gratinée</h2>
+              <p>Des oignons fondus longuement jusqu'à devenir bien blonds, un bouillon parfumé et une croûte de fromage gratiné.</p>
+              <ul class="recette-infos">
+                <li><strong>Pour</strong> 4 personnes</li>
+                <li><strong>Préparation :</strong> 20 min</li>
+                <li><strong>Cuisson :</strong> 1 h</li>
+                <li><strong>Difficulté :</strong> facile</li>
+              </ul>
+            </header>
+            <div class="recette-corps">
+              <div>
+                <h3>Ingrédients</h3>
+                <ul class="ingredients">
+                  <li>1 kg d'oignons jaunes (oignons paille)</li>
+                  <li>50 g de beurre</li>
+                  <li>1 cuillère à soupe de farine</li>
+                  <li>10 cl de vin blanc sec (facultatif)</li>
+                  <li>1,5 litre de bouillon de bœuf (ou de légumes)</li>
+                  <li>1 feuille de laurier et 1 branche de thym</li>
+                  <li>8 tranches de pain de campagne ou de baguette rassis</li>
+                  <li>150 g de fromage râpé (comté ou gruyère)</li>
+                  <li>Sel, poivre</li>
+                </ul>
+              </div>
+              <div>
+                <h3>Préparation</h3>
+                <ol class="etapes">
+                  <li>Épluchez les oignons et émincez-les finement.</li>
+                  <li>Faites fondre le beurre dans une grande cocotte et ajoutez les oignons. Laissez-les cuire 30 à 40 min à feu doux à moyen, en remuant régulièrement, jusqu'à ce qu'ils soient bien fondants et d'une belle couleur blonde dorée.</li>
+                  <li>Saupoudrez de farine et mélangez 1 min. Versez le vin blanc, laissez réduire 2 min, puis ajoutez le bouillon, le laurier et le thym.</li>
+                  <li>Laissez mijoter 20 min à couvert. Retirez les herbes, salez et poivrez.</li>
+                  <li>Faites griller les tranches de pain. Allumez le gril du four.</li>
+                  <li>Répartissez la soupe dans des bols allant au four, posez 2 tranches de pain sur chaque bol et couvrez généreusement de fromage. Passez 5 à 8 min sous le gril, jusqu'à ce que le fromage soit doré et bouillonnant.</li>
+                </ol>
+              </div>
+            </div>
+            <div class="astuce">
+              <p><strong>L'astuce du maraîcher :</strong> ne brusquez pas les oignons. C'est la cuisson lente qui leur donne leur goût sucré ; s'ils commencent à accrocher, ajoutez une cuillère d'eau et baissez le feu.</p>
+            </div>
+            <div class="actions">
+              <a class="btn btn-outline" href="produits.html">Voir le produit</a>
+              <button type="button" class="btn btn-primary" data-print>Imprimer la recette</button>
+            </div>
+          </article>
+
+          <!-- 7 -->
+          <article class="recette" id="salade-betteraves" data-cat="betteraves oignons">
+            <header class="recette-head">
+              <div class="badges"><span class="badge">Betteraves</span><span class="badge badge-orange">Entrée froide</span></div>
+              <h2>Salade de carottes rouges</h2>
+              <p>Chez nous, la betterave rouge s'appelle souvent « carotte rouge ». En salade, avec une bonne vinaigrette et de l'oignon rouge, c'est l'entrée de saison par excellence.</p>
+              <ul class="recette-infos">
+                <li><strong>Pour</strong> 4 personnes</li>
+                <li><strong>Préparation :</strong> 15 min</li>
+                <li><strong>Cuisson :</strong> 1 h à 1 h 30 (si les betteraves sont crues)</li>
+                <li><strong>Difficulté :</strong> très facile</li>
+              </ul>
+            </header>
+            <div class="recette-corps">
+              <div>
+                <h3>Ingrédients</h3>
+                <ul class="ingredients">
+                  <li>600 g de betteraves rouges</li>
+                  <li>1 petit oignon rouge</li>
+                  <li>1 cuillère à café de moutarde</li>
+                  <li>2 cuillères à soupe de vinaigre de vin (ou de cidre)</li>
+                  <li>4 cuillères à soupe d'huile (colza, tournesol ou noix)</li>
+                  <li>Un peu de persil ou de ciboulette</li>
+                  <li>Sel, poivre</li>
+                </ul>
+              </div>
+              <div>
+                <h3>Préparation</h3>
+                <ol class="etapes">
+                  <li>Si vos betteraves sont crues, lavez-les sans les éplucher ni couper la racine, puis faites-les cuire 1 h à 1 h 30 dans une grande casserole d'eau à petits bouillons, selon leur taille. Elles sont cuites quand la pointe d'un couteau s'enfonce facilement. Laissez-les refroidir.</li>
+                  <li>Épluchez les betteraves cuites (la peau s'enlève toute seule) et coupez-les en cubes ou en fines tranches.</li>
+                  <li>Épluchez l'oignon rouge et émincez-le très finement.</li>
+                  <li>Préparez la vinaigrette : mélangez la moutarde, le vinaigre, le sel et le poivre, puis ajoutez l'huile en fouettant.</li>
+                  <li>Mélangez les betteraves, l'oignon et la vinaigrette. Parsemez d'herbes ciselées et laissez reposer 15 min au frais avant de servir.</li>
+                </ol>
+              </div>
+            </div>
+            <div class="astuce">
+              <p><strong>L'astuce du maraîcher :</strong> la betterave tache ! Portez des gants pour l'éplucher et utilisez une planche facile à laver. Cuites, elles se gardent quelques jours au réfrigérateur, bien emballées.</p>
+            </div>
+            <div class="actions">
+              <a class="btn btn-outline" href="produits.html">Voir le produit</a>
+              <button type="button" class="btn btn-primary" data-print>Imprimer la recette</button>
+            </div>
+          </article>
+
+          <!-- 8 -->
+          <article class="recette" id="puree-courge" data-cat="courges pommes-de-terre">
+            <header class="recette-head">
+              <div class="badges"><span class="badge">Courges</span><span class="badge badge-orange">Purée ou soupe</span></div>
+              <h2>Purée de courge bleue ou musquée</h2>
+              <p>Les grosses courges (bleue de Hongrie, musquée de Provence) ont une chair dense et sucrée, idéale en purée… ou en soupe, avec une simple variante.</p>
+              <ul class="recette-infos">
+                <li><strong>Pour</strong> 4 personnes</li>
+                <li><strong>Préparation :</strong> 20 min</li>
+                <li><strong>Cuisson :</strong> 25 min</li>
+                <li><strong>Difficulté :</strong> facile</li>
+              </ul>
+            </header>
+            <div class="recette-corps">
+              <div>
+                <h3>Ingrédients</h3>
+                <ul class="ingredients">
+                  <li>1,2 kg de chair de courge bleue ou musquée (pelée et épépinée)</li>
+                  <li>2 pommes de terre moyennes (pour une purée qui se tient bien)</li>
+                  <li>30 g de beurre</li>
+                  <li>10 cl de lait ou de crème</li>
+                  <li>Sel, poivre, une pincée de muscade</li>
+                  <li><em>Pour la version soupe :</em> 1 oignon et environ 1 litre de bouillon</li>
+                </ul>
+              </div>
+              <div>
+                <h3>Préparation</h3>
+                <ol class="etapes">
+                  <li>Coupez la courge en tranches, retirez les graines et les filaments, puis enlevez l'écorce au couteau en posant chaque tranche à plat sur la planche (c'est plus sûr qu'à l'économe sur une peau épaisse).</li>
+                  <li>Taillez la chair en cubes. Épluchez les pommes de terre et coupez-les en morceaux de même taille.</li>
+                  <li>Faites cuire courge et pommes de terre 20 à 25 min à la vapeur ou dans de l'eau salée, jusqu'à ce qu'elles soient bien tendres.</li>
+                  <li>Égouttez soigneusement : la courge rend beaucoup d'eau. Laissez-la sécher 2 min dans la casserole chaude, sur feu doux.</li>
+                  <li>Écrasez au presse-purée, ajoutez le beurre et le lait chaud, salez, poivrez et râpez un peu de muscade.</li>
+                  <li><em>Version soupe :</em> faites revenir un oignon émincé, ajoutez les cubes de courge et de pomme de terre, couvrez de bouillon, cuisez 25 min puis mixez avec un trait de crème.</li>
+                </ol>
+              </div>
+            </div>
+            <div class="astuce">
+              <p><strong>L'astuce du maraîcher :</strong> une grosse courge, c'est beaucoup pour une seule fois. Les morceaux entamés se gardent quelques jours au réfrigérateur, filmés ; la purée se congèle aussi très bien. Pour savoir quelles courges sont disponibles, appelez au <a href="tel:+33650515836">06 50 51 58 36</a>.</p>
+            </div>
+            <div class="actions">
+              <a class="btn btn-outline" href="produits.html">Voir le produit</a>
+              <button type="button" class="btn btn-primary" data-print>Imprimer la recette</button>
+            </div>
+          </article>
+
+        </div>
+      </div>
+    </div>
+  </section>
+
+  <section class="section section-alt" id="preparer-cardons">
+    <div class="wrap">
+      <div class="callout callout-green">
+        <div class="icon" aria-hidden="true">🔪</div>
+        <div>
+          <h3>Préparer les cardons frais</h3>
+          <p>Le cardon demande un peu de patience, mais la technique est simple :</p>
+          <ol>
+            <li><strong>Effiler :</strong> retirez les feuilles et les côtes trop vertes ou creuses. Avec un économe ou un petit couteau, ôtez les fils qui courent le long des côtes, comme pour le céleri ou la rhubarbe. Des gants évitent d'avoir les doigts tachés.</li>
+            <li><strong>Citronner :</strong> coupez en tronçons de 6 à 8 cm et plongez-les aussitôt dans de l'eau citronnée. Le cardon noircit très vite à l'air ; le citron le garde bien blanc.</li>
+            <li><strong>Blanchir :</strong> faites-les cuire 30 à 45 min à petits bouillons dans de l'eau salée additionnée d'une cuillère de farine délayée et d'un jus de citron (un « blanc »). Ils sont prêts quand la pointe d'un couteau s'y enfonce sans résistance.</li>
+          </ol>
+          <p>Ensuite, place au gratin, aux cardons à la moelle ou à votre recette préférée. Et si vous manquez de temps, le bocal de cardons au naturel fait très bien l'affaire.</p>
+        </div>
+      </div>
+    </div>
+  </section>
+
+  <section class="section">
+    <div class="wrap">
+      <div class="cta">
+        <div>
+          <h2>Envie de cuisiner de saison ?</h2>
+          <p>Passez à la ferme de Saint-Bernard chercher vos légumes. En cas de doute sur les horaires ou les produits disponibles, appelez avant de venir.</p>
+        </div>
+        <div class="actions" style="margin-top:0">
+          <a class="btn btn-primary" href="contact.html">Nous trouver</a>
+          <a class="btn btn-ghost" href="tel:+33650515836">06 50 51 58 36</a>
+        </div>
+      </div>
+    </div>
+  </section>
+
+</main>
+
+<footer class="site-footer">
+  <div class="wrap">
+    <div class="footer-grid">
+      <div>
+        <h4>Maraîcher local – Sébastien Boyer</h4>
+        <p>Fruits et légumes de saison en vente directe à la ferme, à Saint-Bernard dans l'Ain.</p>
+        <p>49 Chemin des Cures, 01600 Saint-Bernard<br><a href="tel:+33650515836">06 50 51 58 36</a></p>
+      </div>
+      <div>
+        <h4>Le site</h4>
+        <ul>
+          <li><a href="produits.html">Produits &amp; prix</a></li>
+          <li><a href="saisons.html">Calendrier des saisons</a></li>
+          <li><a href="recettes.html">Recettes</a></li>
+          <li><a href="ferme.html">La ferme</a></li>
+          <li><a href="contact.html">Nous trouver &amp; horaires</a></li>
+        </ul>
+      </div>
+      <div>
+        <h4>Venir à la ferme</h4>
+        <ul>
+          <li>Ouvert à partir de 8h</li>
+          <li>Appelez avant de passer en cas de doute</li>
+          <li><a href="https://www.google.com/maps/search/?api=1&query=49+Chemin+des+Cures+01600+Saint-Bernard" target="_blank" rel="noopener">Itinéraire Google Maps →</a></li>
+        </ul>
+      </div>
+    </div>
+    <div class="footer-bottom">
+      <span>© <span id="year">2026</span> Sébastien Boyer, maraîcher à Saint-Bernard (01)</span>
+      <a href="mentions-legales.html">Mentions légales</a>
+    </div>
+  </div>
+</footer>
+
+<script src="js/main.js"></script>
+<script>
+  // Imprimer une seule recette : classe temporaire sur le body + la recette choisie
+  (function () {
+    var body = document.body;
+    function nettoyer() {
+      body.classList.remove('print-one');
+      document.querySelectorAll('.recette.is-printing').forEach(function (a) { a.classList.remove('is-printing'); });
+    }
+    document.querySelectorAll('.page-recettes [data-print]').forEach(function (btn) {
+      btn.addEventListener('click', function () {
+        var recette = btn.closest('.recette');
+        if (!recette) return;
+        nettoyer();
+        body.classList.add('print-one');
+        recette.classList.add('is-printing');
+        window.addEventListener('afterprint', nettoyer, { once: true });
+        window.print();
+      });
+    });
+  })();
+</script>
+</body>
+</html>

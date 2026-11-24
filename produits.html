@@ -1,0 +1,353 @@
+<!DOCTYPE html>
+<html lang="fr">
+<head>
+  <meta charset="utf-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1">
+  <title>Nos produits &amp; prix · Maraîcher local – Sébastien Boyer, Saint-Bernard (01)</title>
+  <meta name="description" content="Pommes de terre, oignons, courges, cardons lyonnais, betteraves, miel : produits et prix du maraîcher Sébastien Boyer, vente directe à Saint-Bernard (Ain).">
+  <link rel="preconnect" href="https://fonts.googleapis.com">
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+  <link href="https://fonts.googleapis.com/css2?family=Fraunces:opsz,wght@9..144,600;9..144,800&family=Inter:wght@400;500;600&display=swap" rel="stylesheet">
+  <link rel="stylesheet" href="style.css">
+  <link rel="icon" href="favicon.svg" type="image/svg+xml">
+  <style>
+    .page-produits .card h3 { margin-bottom: .4rem; }
+    .page-produits .card-body .tip { font-size: .88rem; color: var(--text); background: var(--cream); border-radius: 10px; padding: .55rem .75rem; margin-bottom: .9rem; }
+    .page-produits .card-body .tip strong { color: var(--green); }
+    /* Carte sans photo : bloc décoratif « cerises » */
+    .page-produits .cherry-art {
+      position: relative; aspect-ratio: 4 / 3; overflow: hidden;
+      background: radial-gradient(circle at 80% 15%, #fff 0, transparent 45%), linear-gradient(135deg, #ffe4e6, #fecdd3 60%, #fda4af);
+    }
+    .page-produits .cherry-art span {
+      position: absolute; width: 26%; aspect-ratio: 1; border-radius: 50%;
+      background: radial-gradient(circle at 32% 30%, #fecdd3 0 8%, #be123c 9% 55%, #881337 100%);
+      box-shadow: 0 10px 20px -8px rgba(0,0,0,.5);
+    }
+    .page-produits .cherry-art span:nth-of-type(1) { left: 18%; top: 50%; }
+    .page-produits .cherry-art span:nth-of-type(2) { left: 42%; top: 56%; }
+    .page-produits .cherry-art i {
+      position: absolute; left: 30%; top: 14%; width: 26%; height: 42%;
+      border: 4px solid #3f6212; border-bottom: 0; border-right: 0; border-radius: 100% 0 0 0;
+      transform: rotate(8deg);
+    }
+    .page-produits .cherry-art b {
+      position: absolute; right: 1rem; top: .8rem; color: #881337; font-family: "Fraunces", serif;
+      font-size: 1.6rem; font-weight: 800; letter-spacing: .02em;
+    }
+    .page-produits .price-table td:last-child { font-weight: 600; color: var(--orange-dark); white-space: nowrap; }
+    .page-produits .price-table caption { text-align: left; padding: .8rem .9rem 0; color: var(--muted); font-size: .88rem; }
+    .page-produits .keep-list { margin: .3rem 0 0; padding-left: 1.1rem; }
+    .page-produits .keep-list li { margin-bottom: .45rem; }
+    .page-produits .stack { display: grid; gap: 1.4rem; }
+    .page-produits .cta .actions { margin-top: 0; }
+  </style>
+</head>
+<body class="page-produits">
+
+<header class="site-header">
+  <div class="wrap">
+    <a href="index.html" class="brand">
+      <img src="favicon.svg" alt="">
+      <div><strong>Sébastien Boyer</strong><span>Maraîcher · Saint-Bernard</span></div>
+    </a>
+    <button class="nav-toggle" aria-expanded="false" aria-controls="menu">Menu</button>
+    <nav class="main-nav" id="menu" aria-label="Menu principal">
+      <a href="index.html">Accueil</a>
+      <a href="produits.html">Produits</a>
+      <a href="saisons.html">Saisons</a>
+      <a href="recettes.html">Recettes</a>
+      <a href="ferme.html">La ferme</a>
+      <a href="contact.html">Nous trouver</a>
+      <a href="tel:+33650515836" class="nav-call">📞 Appeler</a>
+    </nav>
+  </div>
+</header>
+
+<main>
+
+  <section class="page-hero" style="background-image:url('images/pommes-de-terre.jpg')">
+    <div class="wrap">
+      <p class="eyebrow">Vente directe à la ferme · Saint-Bernard</p>
+      <h1>Nos produits &amp; prix</h1>
+      <p class="lead">Pommes de terre, oignons, courges, cardons, carottes rouges… Des produits frais et de saison, à prix simples, à venir chercher directement à la ferme.</p>
+    </div>
+  </section>
+
+  <section class="section">
+    <div class="wrap">
+      <div class="section-head">
+        <p class="eyebrow">Ce que vous trouverez</p>
+        <h2>Les produits de la ferme</h2>
+        <p>Les prix sont indicatifs et les disponibilités changent avec les saisons et les récoltes : en cas de doute, un petit coup de fil avant de passer.</p>
+      </div>
+
+      <div class="filters" data-target="#liste-produits" aria-label="Filtrer les produits">
+        <button data-filter="tout" aria-pressed="true">Tout</button>
+        <button data-filter="legumes" aria-pressed="false">Légumes</button>
+        <button data-filter="courges" aria-pressed="false">Courges</button>
+        <button data-filter="cardons" aria-pressed="false">Cardons</button>
+        <button data-filter="epicerie" aria-pressed="false">Épicerie (bocaux, miel)</button>
+        <button data-filter="fruits" aria-pressed="false">Fruits</button>
+      </div>
+
+      <div class="grid" id="liste-produits">
+
+        <article class="card" data-cat="legumes">
+          <img src="images/pommes-de-terre.jpg" alt="Sacs de pommes de terre en filet orange posés sur une palette" loading="lazy">
+          <div class="card-body">
+            <div class="badges"><span class="badge">De saison</span><span class="badge badge-orange">Gros sacs</span></div>
+            <h3>Pommes de terre Sasha</h3>
+            <p>Une variété polyvalente qui se prête à presque tout : purée, gratin, pommes de terre sautées ou au four. Le grand sac est pratique pour faire sa réserve de l'hiver.</p>
+            <p class="tip"><strong>À garder</strong> au frais, au sec et à l'obscurité, dans le filet ou un cageot.</p>
+            <ul class="prices">
+              <li><span>Sac de 10 kg</span><strong>8,00 €</strong></li>
+              <li><span>Sac de 25 kg</span><strong>15,00 €</strong></li>
+            </ul>
+          </div>
+        </article>
+
+        <article class="card" data-cat="legumes">
+          <img src="images/oignons.jpg" alt="Filets d'oignons jaunes paille et d'oignons rouges avec une pancarte de prix" loading="lazy">
+          <div class="card-body">
+            <div class="badges"><span class="badge">De saison</span></div>
+            <h3>Oignons paille</h3>
+            <p>L'oignon jaune de tous les jours : soupes, sauces, tartes, fonds de cuisson. Il se garde longtemps s'il reste bien au sec.</p>
+            <p class="tip"><strong>À garder</strong> dans un endroit sec et aéré, à l'abri de la lumière.</p>
+            <ul class="prices">
+              <li><span>Filet de 2,5 kg</span><strong>4,00 €</strong></li>
+            </ul>
+          </div>
+        </article>
+
+        <article class="card" data-cat="legumes">
+          <img src="images/oignons.jpg" alt="Filets d'oignons rouges à côté des oignons jaunes sur l'étal" loading="lazy">
+          <div class="card-body">
+            <div class="badges"><span class="badge">De saison</span></div>
+            <h3>Oignons rouges</h3>
+            <p>Plus doux, ils sont parfaits crus en salade, émincés dans un sandwich ou confits à la poêle pour accompagner une viande.</p>
+            <p class="tip"><strong>À garder</strong> au sec et aéré, comme les oignons paille.</p>
+            <ul class="prices">
+              <li><span>Filet de 2,5 kg</span><strong>5,00 €</strong></li>
+            </ul>
+          </div>
+        </article>
+
+        <article class="card" data-cat="courges legumes">
+          <img src="images/butternut-potimarron.jpg" alt="Caisse de courges butternut beiges" loading="lazy">
+          <div class="card-body">
+            <div class="badges"><span class="badge">De saison</span><span class="badge badge-orange">Automne-hiver</span></div>
+            <h3>Butternut</h3>
+            <p>Chair douce et légèrement sucrée, peu de graines : idéale en velouté, rôtie au four en cubes ou en purée.</p>
+            <p class="tip"><strong>À garder</strong> entière, à température ambiante, au sec : elle tient plusieurs mois.</p>
+            <ul class="prices">
+              <li><span>Au kilo</span><strong>2,00 €/kg</strong></li>
+            </ul>
+          </div>
+        </article>
+
+        <article class="card" data-cat="courges legumes">
+          <img src="images/butternut-potimarron.jpg" alt="Potimarrons rouge orangé posés sur une caisse de butternuts" loading="lazy">
+          <div class="card-body">
+            <div class="badges"><span class="badge">De saison</span><span class="badge badge-orange">Automne-hiver</span></div>
+            <h3>Potimarron</h3>
+            <p>Petit goût de châtaigne, et sa peau fine se mange une fois cuite : pas besoin de l'éplucher pour une soupe ou un gratin.</p>
+            <p class="tip"><strong>À garder</strong> entier à température ambiante ; une fois entamé, au frigo quelques jours.</p>
+            <ul class="prices">
+              <li><span>Selon la pièce</span><strong>Prix sur place</strong></li>
+            </ul>
+          </div>
+        </article>
+
+        <article class="card" data-cat="legumes">
+          <img src="images/betteraves.jpg" alt="Caisse en bois remplie de betteraves rouges avec une pancarte à 1,80 € le kilo" loading="lazy">
+          <div class="card-body">
+            <div class="badges"><span class="badge">De saison</span><span class="badge badge-orange">Spécialité lyonnaise</span></div>
+            <h3>Carottes rouges (betteraves)</h3>
+            <p>Chez nous, on dit « carottes rouges » pour la betterave rouge. En salade avec une vinaigrette à l'échalote, râpée crue ou rôtie au four.</p>
+            <p class="tip"><strong>À garder</strong> au frais (bac à légumes), fanes coupées.</p>
+            <ul class="prices">
+              <li><span>Au kilo</span><strong>1,80 €/kg</strong></li>
+            </ul>
+          </div>
+        </article>
+
+        <article class="card" data-cat="cardons legumes">
+          <img src="images/cardons.jpg" alt="Cardons frais effilés, bien blancs, rangés dans une caisse en bois" loading="lazy">
+          <div class="card-body">
+            <div class="badges"><span class="badge badge-orange">Spécialité lyonnaise</span><span class="badge">Automne-hiver</span></div>
+            <h3>Cardons frais</h3>
+            <p>Le légume des fêtes dans la région lyonnaise : en gratin à la béchamel ou à la moelle. Un goût fin, proche de l'artichaut.</p>
+            <p class="tip"><strong>À garder</strong> au frais et à cuisiner rapidement ; citronnez-les une fois coupés pour qu'ils ne noircissent pas.</p>
+            <ul class="prices">
+              <li><span>En saison</span><strong>Prix sur place</strong></li>
+            </ul>
+          </div>
+        </article>
+
+        <article class="card" data-cat="cardons epicerie">
+          <img src="images/cardons-bocaux.jpg" alt="Bocaux de cardons lyonnais au naturel alignés sur une étagère" loading="lazy">
+          <div class="card-body">
+            <div class="badges"><span class="badge badge-orange">Spécialité lyonnaise</span><span class="badge">Toute l'année</span></div>
+            <h3>Cardons lyonnais au naturel (bocal)</h3>
+            <p>Cardons effilés à la main, déjà prêts : il suffit d'égoutter et de passer au four en gratin. Bocal de 850 ml, poids net égoutté 520 g. Ingrédients : cardons, eau, sel.</p>
+            <p class="tip"><strong>À garder</strong> dans le placard ; une fois ouvert, au frigo et à consommer rapidement.</p>
+            <ul class="prices">
+              <li><span>Bocal 850 ml</span><strong>8,50 €</strong></li>
+            </ul>
+          </div>
+        </article>
+
+        <article class="card" data-cat="courges">
+          <img src="images/courges-etal.jpg" alt="Grand étal de courges variées, bleues et musquées, en bord de route sous un ciel bleu" loading="lazy">
+          <div class="card-body">
+            <div class="badges"><span class="badge">De saison</span><span class="badge badge-orange">Grand choix</span></div>
+            <h3>Courges variées &amp; citrouilles</h3>
+            <p>Bleues de Hongrie, musquées de Provence, potirons, citrouilles, courges décoratives… Pour la soupe, le four, les confitures ou pour décorer la maison.</p>
+            <p class="tip"><strong>Pour les courges, appelez-moi au <a href="tel:+33650515836">06 50 51 58 36</a></strong> : je vous dis ce qu'il y a en ce moment.</p>
+            <ul class="prices">
+              <li><span>Selon la courge</span><strong>Prix sur place</strong></li>
+            </ul>
+          </div>
+        </article>
+
+        <article class="card" data-cat="epicerie">
+          <img src="images/miel.jpg" alt="Pots de miel acacia, châtaignier, toutes fleurs et sapin" loading="lazy">
+          <div class="card-body">
+            <div class="badges"><span class="badge badge-dark">Revendu</span><span class="badge">Toute l'année</span></div>
+            <h3>Miel ApiSaveurs</h3>
+            <p>Miel de la marque ApiSaveurs, revendu à la ferme (il n'est pas produit ici). Quatre saveurs : acacia (très doux), châtaignier (plus corsé), toutes fleurs et sapin.</p>
+            <p class="tip"><strong>À garder</strong> à température ambiante, pot bien fermé. S'il cristallise, c'est naturel : un bain-marie tiède le rend liquide.</p>
+            <ul class="prices">
+              <li><span>Pot de 500 g</span><strong>10,00 €</strong></li>
+            </ul>
+          </div>
+        </article>
+
+        <article class="card" data-cat="fruits">
+          <div class="cherry-art" aria-hidden="true"><i></i><span></span><span></span><b>Cerises</b></div>
+          <div class="card-body">
+            <div class="badges"><span class="badge">Début d'été</span></div>
+            <h3>Cerises</h3>
+            <p>Les cerises arrivent au début de l'été, pour une période courte. À croquer telles quelles, en clafoutis ou en confiture.</p>
+            <p class="tip"><strong>À garder</strong> au frais, sans les laver avant, et à manger vite.</p>
+            <ul class="prices">
+              <li><span>En saison</span><strong>Prix sur place</strong></li>
+            </ul>
+          </div>
+        </article>
+
+      </div>
+    </div>
+  </section>
+
+  <section class="section section-alt">
+    <div class="wrap">
+      <div class="section-head">
+        <p class="eyebrow">En un coup d'œil</p>
+        <h2>Récapitulatif des prix</h2>
+        <p>Prix indicatifs, à confirmer sur place.</p>
+      </div>
+      <div class="table-wrap">
+        <table class="price-table">
+          <caption>Tarifs indicatifs pratiqués à la ferme, 49 Chemin des Cures à Saint-Bernard</caption>
+          <thead>
+            <tr><th scope="col">Produit</th><th scope="col">Conditionnement</th><th scope="col">Prix</th></tr>
+          </thead>
+          <tbody>
+            <tr><td>Pommes de terre Sasha</td><td>Sac de 10 kg</td><td>8,00 €</td></tr>
+            <tr><td>Pommes de terre Sasha</td><td>Sac de 25 kg</td><td>15,00 €</td></tr>
+            <tr><td>Oignons paille</td><td>Filet de 2,5 kg</td><td>4,00 €</td></tr>
+            <tr><td>Oignons rouges</td><td>Filet de 2,5 kg</td><td>5,00 €</td></tr>
+            <tr><td>Butternut</td><td>Au kilo</td><td>2,00 €/kg</td></tr>
+            <tr><td>Potimarron</td><td>À la pièce</td><td>Prix sur place</td></tr>
+            <tr><td>Carottes rouges (betteraves)</td><td>Au kilo</td><td>1,80 €/kg</td></tr>
+            <tr><td>Cardons frais</td><td>En saison</td><td>Prix sur place</td></tr>
+            <tr><td>Cardons lyonnais au naturel</td><td>Bocal 850 ml (520 g égoutté)</td><td>8,50 €</td></tr>
+            <tr><td>Courges variées &amp; citrouilles</td><td>Selon la courge</td><td>Prix sur place</td></tr>
+            <tr><td>Miel ApiSaveurs (revendu)</td><td>Pot de 500 g</td><td>10,00 €</td></tr>
+            <tr><td>Cerises</td><td>En saison (début d'été)</td><td>Prix sur place</td></tr>
+          </tbody>
+        </table>
+      </div>
+    </div>
+  </section>
+
+  <section class="section">
+    <div class="wrap stack">
+      <div class="callout callout-green">
+        <div class="icon" aria-hidden="true">🧺</div>
+        <div>
+          <h3>Conseils de conservation</h3>
+          <ul class="keep-list">
+            <li><strong>Pommes de terre</strong> : au frais (idéalement entre 6 et 10 °C), au sec et dans l'obscurité, pour éviter qu'elles verdissent ou germent. Pas au réfrigérateur, et pas à côté des oignons.</li>
+            <li><strong>Oignons</strong> : au sec, dans un endroit aéré, dans leur filet ou suspendus. L'humidité les fait germer ou moisir.</li>
+            <li><strong>Courges entières</strong> (butternut, potimarron, musquées…) : à température ambiante, au sec, sans choc. Elles se gardent plusieurs mois. Une fois coupées, au frigo sous film quelques jours.</li>
+            <li><strong>Carottes rouges</strong> : au bac à légumes du réfrigérateur, fanes coupées.</li>
+            <li><strong>Cardons frais</strong> : au frais, et à cuisiner assez vite.</li>
+            <li><strong>Bocaux et miel</strong> : dans le placard ; un bocal ouvert se garde au frigo.</li>
+          </ul>
+        </div>
+      </div>
+
+      <div class="callout">
+        <div class="icon" aria-hidden="true">📞</div>
+        <div>
+          <h3>Bon à savoir avant de venir</h3>
+          <p>Les prix sont <strong>indicatifs</strong> et à confirmer sur place. Les disponibilités dépendent de la saison et des récoltes. Pour les courges, appelez-moi au <a href="tel:+33650515836">06 50 51 58 36</a>.</p>
+          <p>Pour savoir quoi cuisiner avec ces produits, direction les <a href="recettes.html">recettes</a> ; pour savoir quand ils sont là, consultez le <a href="saisons.html">calendrier des saisons</a>.</p>
+        </div>
+      </div>
+
+      <div class="cta">
+        <div>
+          <h2>On vous met quelque chose de côté&nbsp;?</h2>
+          <p>Appelez pour vérifier ce qu'il y a en ce moment, puis passez à la ferme à Saint-Bernard.</p>
+        </div>
+        <div class="actions">
+          <a href="tel:+33650515836" class="btn btn-primary">Appeler le 06 50 51 58 36</a>
+          <a href="contact.html" class="btn btn-ghost">Venir à la ferme</a>
+        </div>
+      </div>
+    </div>
+  </section>
+
+</main>
+
+<footer class="site-footer">
+  <div class="wrap">
+    <div class="footer-grid">
+      <div>
+        <h4>Maraîcher local – Sébastien Boyer</h4>
+        <p>Fruits et légumes de saison en vente directe à la ferme, à Saint-Bernard dans l'Ain.</p>
+        <p>49 Chemin des Cures, 01600 Saint-Bernard<br><a href="tel:+33650515836">06 50 51 58 36</a></p>
+      </div>
+      <div>
+        <h4>Le site</h4>
+        <ul>
+          <li><a href="produits.html">Produits &amp; prix</a></li>
+          <li><a href="saisons.html">Calendrier des saisons</a></li>
+          <li><a href="recettes.html">Recettes</a></li>
+          <li><a href="ferme.html">La ferme</a></li>
+          <li><a href="contact.html">Nous trouver &amp; horaires</a></li>
+        </ul>
+      </div>
+      <div>
+        <h4>Venir à la ferme</h4>
+        <ul>
+          <li>Ouvert à partir de 8h</li>
+          <li>Appelez avant de passer en cas de doute</li>
+          <li><a href="https://www.google.com/maps/search/?api=1&query=49+Chemin+des+Cures+01600+Saint-Bernard" target="_blank" rel="noopener">Itinéraire Google Maps →</a></li>
+        </ul>
+      </div>
+    </div>
+    <div class="footer-bottom">
+      <span>© <span id="year">2026</span> Sébastien Boyer, maraîcher à Saint-Bernard (01)</span>
+      <a href="mentions-legales.html">Mentions légales</a>
+    </div>
+  </div>
+</footer>
+
+<script src="js/main.js"></script>
+</body>
+</html>

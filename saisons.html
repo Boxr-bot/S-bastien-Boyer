@@ -1,0 +1,373 @@
+<!DOCTYPE html>
+<html lang="fr">
+<head>
+  <meta charset="utf-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1">
+  <title>Calendrier des saisons · Maraîcher local – Sébastien Boyer, Saint-Bernard (01)</title>
+  <meta name="description" content="Quand trouver courges, cardons, pommes de terre, oignons, betteraves et cerises chez le maraîcher de Saint-Bernard (Ain) : calendrier des saisons en vente directe.">
+  <link rel="preconnect" href="https://fonts.googleapis.com">
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+  <link href="https://fonts.googleapis.com/css2?family=Fraunces:opsz,wght@9..144,600;9..144,800&family=Inter:wght@400;500;600&display=swap" rel="stylesheet">
+  <link rel="stylesheet" href="style.css">
+  <link rel="icon" href="favicon.svg" type="image/svg+xml">
+  <style>
+    .page-saisons .cal { min-width: 760px; table-layout: fixed; }
+    .page-saisons .cal th[scope="row"] { width: 230px; font-weight: 600; background: var(--paper); position: sticky; left: 0; z-index: 1; border-right: 1px solid var(--line); }
+    .page-saisons .cal thead th { text-align: center; padding: .6rem .2rem; font-size: .85rem; }
+    .page-saisons .cal thead th:first-child { width: 220px; text-align: left; padding-left: .9rem; position: sticky; left: 0; z-index: 2; }
+    .page-saisons .cal abbr { text-decoration: none; }
+    .page-saisons .cal td { text-align: center; padding: .35rem .15rem; font-size: .9rem; }
+    .page-saisons .cal td span[aria-hidden] {
+      display: flex; align-items: center; justify-content: center; height: 2rem; border-radius: 8px; font-size: .95rem;
+    }
+    .page-saisons .cal td.on span[aria-hidden] { background: var(--green); color: #fff; }
+    .page-saisons .cal td.part span[aria-hidden] { background: repeating-linear-gradient(135deg, var(--green-soft) 0 6px, #d4e4bb 6px 12px); color: var(--green); }
+    .page-saisons .cal td.off span[aria-hidden] { color: #c9bfb1; }
+    .page-saisons .cal .is-now { background: var(--orange-soft); }
+    .page-saisons .cal thead th.is-now { background: var(--orange); color: #fff; }
+    .page-saisons .legend { display: flex; flex-wrap: wrap; gap: 1.2rem; margin: 1rem 0 0; padding: 0; list-style: none; font-size: .92rem; color: var(--text); }
+    .page-saisons .legend li { display: flex; align-items: center; gap: .5rem; }
+    .page-saisons .legend .sw { display: inline-flex; align-items: center; justify-content: center; width: 1.9rem; height: 1.5rem; border-radius: 6px; font-size: .85rem; }
+    .page-saisons .legend .sw.on { background: var(--green); color: #fff; }
+    .page-saisons .legend .sw.part { background: repeating-linear-gradient(135deg, var(--green-soft) 0 6px, #d4e4bb 6px 12px); color: var(--green); }
+    .page-saisons .legend .sw.off { border: 1px solid var(--line); color: #c9bfb1; }
+    .page-saisons .legend .sw.now { background: var(--orange); }
+    .page-saisons .now-box { background: var(--paper); border: 2px solid var(--orange); border-radius: var(--radius); padding: 1.4rem 1.6rem; }
+    .page-saisons .now-box h2 { font-size: clamp(1.4rem, 3vw, 1.9rem); }
+    .page-saisons .now-list { list-style: none; padding: 0; margin: .4rem 0 0; display: flex; flex-wrap: wrap; gap: .5rem; }
+    .page-saisons .now-list li { background: var(--green-soft); color: var(--green); font-weight: 600; padding: .35rem .85rem; border-radius: 999px; font-size: .93rem; }
+    .page-saisons .now-list li.part { background: var(--cream); border: 1px dashed #b9cf96; }
+    .page-saisons .season h3 { display: flex; align-items: center; gap: .5rem; }
+    .page-saisons .season .months { font-size: .82rem; color: var(--muted); font-family: "Inter", sans-serif; font-weight: 500; }
+    .page-saisons .note { margin: 1rem 0 0; }
+    .page-saisons .stack { display: grid; gap: 1.4rem; }
+    .page-saisons .cta .actions { margin-top: 0; }
+  </style>
+</head>
+<body class="page-saisons">
+
+<header class="site-header">
+  <div class="wrap">
+    <a href="index.html" class="brand">
+      <img src="favicon.svg" alt="">
+      <div><strong>Sébastien Boyer</strong><span>Maraîcher · Saint-Bernard</span></div>
+    </a>
+    <button class="nav-toggle" aria-expanded="false" aria-controls="menu">Menu</button>
+    <nav class="main-nav" id="menu" aria-label="Menu principal">
+      <a href="index.html">Accueil</a>
+      <a href="produits.html">Produits</a>
+      <a href="saisons.html">Saisons</a>
+      <a href="recettes.html">Recettes</a>
+      <a href="ferme.html">La ferme</a>
+      <a href="contact.html">Nous trouver</a>
+      <a href="tel:+33650515836" class="nav-call">📞 Appeler</a>
+    </nav>
+  </div>
+</header>
+
+<main>
+
+  <section class="page-hero" style="background-image:url('images/courges-variees.jpg')">
+    <div class="wrap">
+      <p class="eyebrow">Fruits et légumes de saison · Ain</p>
+      <h1>Calendrier des saisons</h1>
+      <p class="lead">Quand trouver quoi à la ferme de Saint-Bernard ? Voici les grandes périodes, mois par mois, pour venir au bon moment.</p>
+    </div>
+  </section>
+
+  <section class="section" id="en-ce-moment">
+    <div class="wrap">
+      <div class="now-box">
+        <p class="eyebrow">En ce moment</p>
+        <h2 id="now-title">Ce qu'on trouve ce mois-ci</h2>
+        <p id="now-intro">Repérez le mois en cours dans le calendrier ci-dessous : les cases vertes indiquent les produits habituellement disponibles.</p>
+        <ul class="now-list" id="now-list" hidden></ul>
+        <p class="muted note"><small>Indicatif : selon la météo et les récoltes, un produit peut arriver plus tôt, plus tard, ou manquer. Un coup de fil au <a href="tel:+33650515836">06 50 51 58 36</a> et vous êtes fixé.</small></p>
+      </div>
+    </div>
+  </section>
+
+  <section class="section section-alt">
+    <div class="wrap">
+      <div class="section-head">
+        <p class="eyebrow">Mois par mois</p>
+        <h2>Le calendrier de la ferme</h2>
+        <p>Périodes indicatives pour l'Ain. Elles changent d'une année à l'autre selon la météo et les récoltes : ce calendrier donne une idée, pas une garantie.</p>
+      </div>
+
+      <div class="table-wrap">
+        <table class="cal" id="calendrier">
+          <caption class="visually-hidden">Disponibilité indicative des produits de la ferme selon les mois de l'année</caption>
+          <thead>
+            <tr>
+              <th scope="col">Produit</th>
+              <th scope="col"><abbr title="janvier">Jan</abbr></th>
+              <th scope="col"><abbr title="février">Fév</abbr></th>
+              <th scope="col"><abbr title="mars">Mar</abbr></th>
+              <th scope="col"><abbr title="avril">Avr</abbr></th>
+              <th scope="col"><abbr title="mai">Mai</abbr></th>
+              <th scope="col"><abbr title="juin">Juin</abbr></th>
+              <th scope="col"><abbr title="juillet">Juil</abbr></th>
+              <th scope="col"><abbr title="août">Août</abbr></th>
+              <th scope="col"><abbr title="septembre">Sep</abbr></th>
+              <th scope="col"><abbr title="octobre">Oct</abbr></th>
+              <th scope="col"><abbr title="novembre">Nov</abbr></th>
+              <th scope="col"><abbr title="décembre">Déc</abbr></th>
+            </tr>
+          </thead>
+          <tbody>
+            <tr>
+              <th scope="row">Pommes de terre</th>
+              <td class="on"><span aria-hidden="true">●</span><span class="visually-hidden">disponible</span></td>
+              <td class="on"><span aria-hidden="true">●</span><span class="visually-hidden">disponible</span></td>
+              <td class="part"><span aria-hidden="true">◐</span><span class="visually-hidden">début ou fin de saison</span></td>
+              <td class="off"><span aria-hidden="true">–</span><span class="visually-hidden">pas disponible</span></td>
+              <td class="off"><span aria-hidden="true">–</span><span class="visually-hidden">pas disponible</span></td>
+              <td class="off"><span aria-hidden="true">–</span><span class="visually-hidden">pas disponible</span></td>
+              <td class="off"><span aria-hidden="true">–</span><span class="visually-hidden">pas disponible</span></td>
+              <td class="part"><span aria-hidden="true">◐</span><span class="visually-hidden">début ou fin de saison</span></td>
+              <td class="on"><span aria-hidden="true">●</span><span class="visually-hidden">disponible</span></td>
+              <td class="on"><span aria-hidden="true">●</span><span class="visually-hidden">disponible</span></td>
+              <td class="on"><span aria-hidden="true">●</span><span class="visually-hidden">disponible</span></td>
+              <td class="on"><span aria-hidden="true">●</span><span class="visually-hidden">disponible</span></td>
+            </tr>
+            <tr>
+              <th scope="row">Oignons (paille et rouges)</th>
+              <td class="on"><span aria-hidden="true">●</span><span class="visually-hidden">disponible</span></td>
+              <td class="on"><span aria-hidden="true">●</span><span class="visually-hidden">disponible</span></td>
+              <td class="part"><span aria-hidden="true">◐</span><span class="visually-hidden">début ou fin de saison</span></td>
+              <td class="off"><span aria-hidden="true">–</span><span class="visually-hidden">pas disponible</span></td>
+              <td class="off"><span aria-hidden="true">–</span><span class="visually-hidden">pas disponible</span></td>
+              <td class="off"><span aria-hidden="true">–</span><span class="visually-hidden">pas disponible</span></td>
+              <td class="off"><span aria-hidden="true">–</span><span class="visually-hidden">pas disponible</span></td>
+              <td class="part"><span aria-hidden="true">◐</span><span class="visually-hidden">début ou fin de saison</span></td>
+              <td class="on"><span aria-hidden="true">●</span><span class="visually-hidden">disponible</span></td>
+              <td class="on"><span aria-hidden="true">●</span><span class="visually-hidden">disponible</span></td>
+              <td class="on"><span aria-hidden="true">●</span><span class="visually-hidden">disponible</span></td>
+              <td class="on"><span aria-hidden="true">●</span><span class="visually-hidden">disponible</span></td>
+            </tr>
+            <tr>
+              <th scope="row">Courges, potimarron, butternut</th>
+              <td class="on"><span aria-hidden="true">●</span><span class="visually-hidden">disponible</span></td>
+              <td class="part"><span aria-hidden="true">◐</span><span class="visually-hidden">début ou fin de saison</span></td>
+              <td class="off"><span aria-hidden="true">–</span><span class="visually-hidden">pas disponible</span></td>
+              <td class="off"><span aria-hidden="true">–</span><span class="visually-hidden">pas disponible</span></td>
+              <td class="off"><span aria-hidden="true">–</span><span class="visually-hidden">pas disponible</span></td>
+              <td class="off"><span aria-hidden="true">–</span><span class="visually-hidden">pas disponible</span></td>
+              <td class="off"><span aria-hidden="true">–</span><span class="visually-hidden">pas disponible</span></td>
+              <td class="off"><span aria-hidden="true">–</span><span class="visually-hidden">pas disponible</span></td>
+              <td class="part"><span aria-hidden="true">◐</span><span class="visually-hidden">début ou fin de saison</span></td>
+              <td class="on"><span aria-hidden="true">●</span><span class="visually-hidden">disponible</span></td>
+              <td class="on"><span aria-hidden="true">●</span><span class="visually-hidden">disponible</span></td>
+              <td class="on"><span aria-hidden="true">●</span><span class="visually-hidden">disponible</span></td>
+            </tr>
+            <tr>
+              <th scope="row">Cardons frais</th>
+              <td class="part"><span aria-hidden="true">◐</span><span class="visually-hidden">début ou fin de saison</span></td>
+              <td class="off"><span aria-hidden="true">–</span><span class="visually-hidden">pas disponible</span></td>
+              <td class="off"><span aria-hidden="true">–</span><span class="visually-hidden">pas disponible</span></td>
+              <td class="off"><span aria-hidden="true">–</span><span class="visually-hidden">pas disponible</span></td>
+              <td class="off"><span aria-hidden="true">–</span><span class="visually-hidden">pas disponible</span></td>
+              <td class="off"><span aria-hidden="true">–</span><span class="visually-hidden">pas disponible</span></td>
+              <td class="off"><span aria-hidden="true">–</span><span class="visually-hidden">pas disponible</span></td>
+              <td class="off"><span aria-hidden="true">–</span><span class="visually-hidden">pas disponible</span></td>
+              <td class="off"><span aria-hidden="true">–</span><span class="visually-hidden">pas disponible</span></td>
+              <td class="part"><span aria-hidden="true">◐</span><span class="visually-hidden">début ou fin de saison</span></td>
+              <td class="on"><span aria-hidden="true">●</span><span class="visually-hidden">disponible</span></td>
+              <td class="on"><span aria-hidden="true">●</span><span class="visually-hidden">disponible</span></td>
+            </tr>
+            <tr>
+              <th scope="row">Carottes rouges (betteraves)</th>
+              <td class="off"><span aria-hidden="true">–</span><span class="visually-hidden">pas disponible</span></td>
+              <td class="off"><span aria-hidden="true">–</span><span class="visually-hidden">pas disponible</span></td>
+              <td class="off"><span aria-hidden="true">–</span><span class="visually-hidden">pas disponible</span></td>
+              <td class="off"><span aria-hidden="true">–</span><span class="visually-hidden">pas disponible</span></td>
+              <td class="off"><span aria-hidden="true">–</span><span class="visually-hidden">pas disponible</span></td>
+              <td class="off"><span aria-hidden="true">–</span><span class="visually-hidden">pas disponible</span></td>
+              <td class="part"><span aria-hidden="true">◐</span><span class="visually-hidden">début ou fin de saison</span></td>
+              <td class="on"><span aria-hidden="true">●</span><span class="visually-hidden">disponible</span></td>
+              <td class="on"><span aria-hidden="true">●</span><span class="visually-hidden">disponible</span></td>
+              <td class="on"><span aria-hidden="true">●</span><span class="visually-hidden">disponible</span></td>
+              <td class="on"><span aria-hidden="true">●</span><span class="visually-hidden">disponible</span></td>
+              <td class="part"><span aria-hidden="true">◐</span><span class="visually-hidden">début ou fin de saison</span></td>
+            </tr>
+            <tr>
+              <th scope="row">Cerises</th>
+              <td class="off"><span aria-hidden="true">–</span><span class="visually-hidden">pas disponible</span></td>
+              <td class="off"><span aria-hidden="true">–</span><span class="visually-hidden">pas disponible</span></td>
+              <td class="off"><span aria-hidden="true">–</span><span class="visually-hidden">pas disponible</span></td>
+              <td class="off"><span aria-hidden="true">–</span><span class="visually-hidden">pas disponible</span></td>
+              <td class="off"><span aria-hidden="true">–</span><span class="visually-hidden">pas disponible</span></td>
+              <td class="on"><span aria-hidden="true">●</span><span class="visually-hidden">disponible</span></td>
+              <td class="part"><span aria-hidden="true">◐</span><span class="visually-hidden">début ou fin de saison</span></td>
+              <td class="off"><span aria-hidden="true">–</span><span class="visually-hidden">pas disponible</span></td>
+              <td class="off"><span aria-hidden="true">–</span><span class="visually-hidden">pas disponible</span></td>
+              <td class="off"><span aria-hidden="true">–</span><span class="visually-hidden">pas disponible</span></td>
+              <td class="off"><span aria-hidden="true">–</span><span class="visually-hidden">pas disponible</span></td>
+              <td class="off"><span aria-hidden="true">–</span><span class="visually-hidden">pas disponible</span></td>
+            </tr>
+            <tr>
+              <th scope="row">Bocaux de cardons lyonnais</th>
+              <td class="on"><span aria-hidden="true">●</span><span class="visually-hidden">disponible</span></td>
+              <td class="on"><span aria-hidden="true">●</span><span class="visually-hidden">disponible</span></td>
+              <td class="on"><span aria-hidden="true">●</span><span class="visually-hidden">disponible</span></td>
+              <td class="on"><span aria-hidden="true">●</span><span class="visually-hidden">disponible</span></td>
+              <td class="on"><span aria-hidden="true">●</span><span class="visually-hidden">disponible</span></td>
+              <td class="on"><span aria-hidden="true">●</span><span class="visually-hidden">disponible</span></td>
+              <td class="on"><span aria-hidden="true">●</span><span class="visually-hidden">disponible</span></td>
+              <td class="on"><span aria-hidden="true">●</span><span class="visually-hidden">disponible</span></td>
+              <td class="on"><span aria-hidden="true">●</span><span class="visually-hidden">disponible</span></td>
+              <td class="on"><span aria-hidden="true">●</span><span class="visually-hidden">disponible</span></td>
+              <td class="on"><span aria-hidden="true">●</span><span class="visually-hidden">disponible</span></td>
+              <td class="on"><span aria-hidden="true">●</span><span class="visually-hidden">disponible</span></td>
+            </tr>
+            <tr>
+              <th scope="row">Miel (revendu)</th>
+              <td class="on"><span aria-hidden="true">●</span><span class="visually-hidden">disponible</span></td>
+              <td class="on"><span aria-hidden="true">●</span><span class="visually-hidden">disponible</span></td>
+              <td class="on"><span aria-hidden="true">●</span><span class="visually-hidden">disponible</span></td>
+              <td class="on"><span aria-hidden="true">●</span><span class="visually-hidden">disponible</span></td>
+              <td class="on"><span aria-hidden="true">●</span><span class="visually-hidden">disponible</span></td>
+              <td class="on"><span aria-hidden="true">●</span><span class="visually-hidden">disponible</span></td>
+              <td class="on"><span aria-hidden="true">●</span><span class="visually-hidden">disponible</span></td>
+              <td class="on"><span aria-hidden="true">●</span><span class="visually-hidden">disponible</span></td>
+              <td class="on"><span aria-hidden="true">●</span><span class="visually-hidden">disponible</span></td>
+              <td class="on"><span aria-hidden="true">●</span><span class="visually-hidden">disponible</span></td>
+              <td class="on"><span aria-hidden="true">●</span><span class="visually-hidden">disponible</span></td>
+              <td class="on"><span aria-hidden="true">●</span><span class="visually-hidden">disponible</span></td>
+            </tr>
+          </tbody>
+        </table>
+      </div>
+
+      <ul class="legend" aria-label="Légende du calendrier">
+        <li><span class="sw on" aria-hidden="true">●</span> Disponible</li>
+        <li><span class="sw part" aria-hidden="true">◐</span> Début ou fin de saison (quantités variables)</li>
+        <li><span class="sw off" aria-hidden="true">–</span> Pas disponible</li>
+        <li><span class="sw now" aria-hidden="true"></span> Mois en cours</li>
+      </ul>
+      <p class="muted note"><small>Pommes de terre et oignons sont récoltés en été puis vendus sur stock tant qu'il en reste. Les bocaux de cardons et le miel (revendu) se trouvent toute l'année, dans la limite des stocks.</small></p>
+    </div>
+  </section>
+
+  <section class="section">
+    <div class="wrap">
+      <div class="section-head">
+        <p class="eyebrow">Au fil de l'année</p>
+        <h2>Les saisons à la ferme</h2>
+      </div>
+      <div class="grid-2">
+        <article class="info-box season">
+          <h3>Automne <span class="months">septembre – novembre</span></h3>
+          <p>La pleine saison. Les courges arrivent (butternut, potimarron, bleues de Hongrie, musquées, citrouilles…), les cardons frais commencent en octobre, et pommes de terre, oignons et carottes rouges sont bien là. C'est le bon moment pour faire ses réserves pour l'hiver.</p>
+        </article>
+        <article class="info-box season">
+          <h3>Hiver <span class="months">décembre – février</span></h3>
+          <p>Les cardons frais, star des repas de fêtes lyonnais, jusqu'en janvier environ. Les courges se gardent bien et restent proposées une bonne partie de l'hiver, tout comme les pommes de terre et les oignons sur stock. Attention : la ferme peut fermer de fin décembre à début janvier.</p>
+        </article>
+        <article class="info-box season">
+          <h3>Printemps <span class="months">mars – mai</span></h3>
+          <p>Soyons honnêtes : c'est la période calme. Il reste parfois des pommes de terre et des oignons en début de printemps, et l'on trouve toujours les bocaux de cardons et le miel. Appelez avant de vous déplacer.</p>
+        </article>
+        <article class="info-box season">
+          <h3>Été <span class="months">juin – août</span></h3>
+          <p>Les cerises ouvrent la saison au début de l'été, pour quelques semaines seulement. Puis viennent les carottes rouges et, en fin d'été, les nouvelles pommes de terre et les oignons.</p>
+        </article>
+      </div>
+    </div>
+  </section>
+
+  <section class="section section-alt">
+    <div class="wrap stack">
+      <div class="callout">
+        <div class="icon" aria-hidden="true">📅</div>
+        <div>
+          <h3>Fermetures ponctuelles</h3>
+          <p>La ferme ferme parfois quelques semaines, par exemple du 1er au 21 novembre, ou de fin décembre à début janvier. Ces fermetures sont annoncées sur place.</p>
+          <p>Le plus simple : appelez au <a href="tel:+33650515836">06 50 51 58 36</a> avant de passer. Horaires et accès sur la page <a href="contact.html">Nous trouver</a>.</p>
+        </div>
+      </div>
+
+      <div class="cta">
+        <div>
+          <h2>Envie de produits de saison&nbsp;?</h2>
+          <p>Appelez pour savoir ce qu'il y a en ce moment, puis venez à la ferme, 49 Chemin des Cures à Saint-Bernard.</p>
+        </div>
+        <div class="actions">
+          <a href="tel:+33650515836" class="btn btn-primary">Appeler le 06 50 51 58 36</a>
+          <a href="produits.html" class="btn btn-ghost">Voir les produits &amp; prix</a>
+        </div>
+      </div>
+    </div>
+  </section>
+
+</main>
+
+<footer class="site-footer">
+  <div class="wrap">
+    <div class="footer-grid">
+      <div>
+        <h4>Maraîcher local – Sébastien Boyer</h4>
+        <p>Fruits et légumes de saison en vente directe à la ferme, à Saint-Bernard dans l'Ain.</p>
+        <p>49 Chemin des Cures, 01600 Saint-Bernard<br><a href="tel:+33650515836">06 50 51 58 36</a></p>
+      </div>
+      <div>
+        <h4>Le site</h4>
+        <ul>
+          <li><a href="produits.html">Produits &amp; prix</a></li>
+          <li><a href="saisons.html">Calendrier des saisons</a></li>
+          <li><a href="recettes.html">Recettes</a></li>
+          <li><a href="ferme.html">La ferme</a></li>
+          <li><a href="contact.html">Nous trouver &amp; horaires</a></li>
+        </ul>
+      </div>
+      <div>
+        <h4>Venir à la ferme</h4>
+        <ul>
+          <li>Ouvert à partir de 8h</li>
+          <li>Appelez avant de passer en cas de doute</li>
+          <li><a href="https://www.google.com/maps/search/?api=1&query=49+Chemin+des+Cures+01600+Saint-Bernard" target="_blank" rel="noopener">Itinéraire Google Maps →</a></li>
+        </ul>
+      </div>
+    </div>
+    <div class="footer-bottom">
+      <span>© <span id="year">2026</span> Sébastien Boyer, maraîcher à Saint-Bernard (01)</span>
+      <a href="mentions-legales.html">Mentions légales</a>
+    </div>
+  </div>
+</footer>
+
+<script src="js/main.js"></script>
+<script>
+  // Met en avant le mois en cours et liste les produits disponibles.
+  (function () {
+    var table = document.getElementById('calendrier');
+    if (!table) return;
+    var m = new Date().getMonth(); // 0 = janvier
+    var col = m + 1;
+    var names = ['janvier','février','mars','avril','mai','juin','juillet','août','septembre','octobre','novembre','décembre'];
+    var head = table.tHead.rows[0].cells[col];
+    if (head) head.classList.add('is-now');
+    var list = document.getElementById('now-list');
+    var count = 0;
+    Array.prototype.forEach.call(table.tBodies[0].rows, function (row) {
+      var cell = row.cells[col];
+      if (!cell) return;
+      cell.classList.add('is-now');
+      if (cell.classList.contains('on') || cell.classList.contains('part')) {
+        var li = document.createElement('li');
+        li.textContent = row.cells[0].textContent.trim() + (cell.classList.contains('part') ? ' (début ou fin de saison)' : '');
+        if (cell.classList.contains('part')) li.className = 'part';
+        list.appendChild(li);
+        count++;
+      }
+    });
+    document.getElementById('now-title').textContent = 'En ' + names[m] + ', on trouve habituellement :';
+    document.getElementById('now-intro').textContent = count
+      ? 'Le mois en cours est surligné en orange dans le calendrier.'
+      : 'Ce mois-ci est calme à la ferme : appelez avant de passer.';
+    if (count) list.hidden = false;
+  })();
+</script>
+</body>
+</html>
